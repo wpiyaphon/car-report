@@ -128,7 +128,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    min-width: 320px;
+  }
+  #root {
+    @apply flex flex-col items-center justify-center;
     min-height: 100vh;
   }
 }

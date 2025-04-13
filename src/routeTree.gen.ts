@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root';
 import { Route as IndexImport } from './routes/index';
 import { Route as ReportIndexImport } from './routes/report/index';
-import { Route as RegisterIndexImport } from './routes/register/index';
 import { Route as ReportOfficerIndexImport } from './routes/report/officer/index';
 
 // Create/Update Routes
@@ -27,12 +26,6 @@ const IndexRoute = IndexImport.update({
 const ReportIndexRoute = ReportIndexImport.update({
   id: '/report/',
   path: '/report/',
-  getParentRoute: () => rootRoute,
-} as any);
-
-const RegisterIndexRoute = RegisterIndexImport.update({
-  id: '/register/',
-  path: '/register/',
   getParentRoute: () => rootRoute,
 } as any);
 
@@ -51,13 +44,6 @@ declare module '@tanstack/react-router' {
       path: '/';
       fullPath: '/';
       preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    '/register/': {
-      id: '/register/';
-      path: '/register';
-      fullPath: '/register';
-      preLoaderRoute: typeof RegisterIndexImport;
       parentRoute: typeof rootRoute;
     };
     '/report/': {
@@ -81,14 +67,12 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/register': typeof RegisterIndexRoute;
   '/report': typeof ReportIndexRoute;
   '/report/officer': typeof ReportOfficerIndexRoute;
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
-  '/register': typeof RegisterIndexRoute;
   '/report': typeof ReportIndexRoute;
   '/report/officer': typeof ReportOfficerIndexRoute;
 }
@@ -96,30 +80,27 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   '/': typeof IndexRoute;
-  '/register/': typeof RegisterIndexRoute;
   '/report/': typeof ReportIndexRoute;
   '/report/officer/': typeof ReportOfficerIndexRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/register' | '/report' | '/report/officer';
+  fullPaths: '/' | '/report' | '/report/officer';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/register' | '/report' | '/report/officer';
-  id: '__root__' | '/' | '/register/' | '/report/' | '/report/officer/';
+  to: '/' | '/report' | '/report/officer';
+  id: '__root__' | '/' | '/report/' | '/report/officer/';
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
-  RegisterIndexRoute: typeof RegisterIndexRoute;
   ReportIndexRoute: typeof ReportIndexRoute;
   ReportOfficerIndexRoute: typeof ReportOfficerIndexRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  RegisterIndexRoute: RegisterIndexRoute,
   ReportIndexRoute: ReportIndexRoute,
   ReportOfficerIndexRoute: ReportOfficerIndexRoute,
 };
@@ -133,16 +114,12 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/register/",
         "/report/",
         "/report/officer/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/register/": {
-      "filePath": "register/index.tsx"
     },
     "/report/": {
       "filePath": "report/index.tsx"
